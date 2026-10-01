@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="860" viewBox="0 0 1240 860" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowDash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1240" height="860" fill="#f8fafc"/>
+  <text x="620" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">TripMate AI — System Architecture</text>
+  <text x="620" y="60" text-anchor="middle" font-size="13" fill="#64748b">LangGraph Multi-Agent Travel Planner · MCP · Supervisor · Guardrails · Human-in-the-Loop</text>
+
+  <!-- ===================== Client layer ===================== -->
+  <rect x="40" y="78" width="1160" height="92" rx="12" fill="#ffffff" stroke="#bfdbfe" stroke-width="2"/>
+  <text x="56" y="100" font-size="12" font-weight="700" fill="#1d4ed8" letter-spacing="1">CLIENT</text>
+  <rect x="380" y="94" width="480" height="62" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="620" y="118" text-anchor="middle" font-size="15" font-weight="700" fill="#1e3a8a">Browser UI</text>
+  <text x="620" y="140" text-anchor="middle" font-size="12" fill="#334155">template/index.html · static/style.css · static/script.js · marked.js · html2pdf.js</text>
+
+  <!-- ===================== API layer ===================== -->
+  <rect x="40" y="190" width="1160" height="120" rx="12" fill="#ffffff" stroke="#99f6e4" stroke-width="2"/>
+  <text x="56" y="212" font-size="12" font-weight="700" fill="#0f766e" letter-spacing="1">API — app.py (FastAPI + Uvicorn)</text>
+  <g font-size="12.5" fill="#0f172a" text-anchor="middle">
+    <rect x="72" y="232" width="250" height="60" rx="9" fill="#f0fdfa" stroke="#5eead4"/>
+    <text x="197" y="258" font-weight="700">POST /api/travel</text>
+    <text x="197" y="278" font-size="11" fill="#475569">start a planning run (pauses at HITL)</text>
+
+    <rect x="338" y="232" width="250" height="60" rx="9" fill="#f0fdfa" stroke="#5eead4"/>
+    <text x="463" y="258" font-weight="700">POST /api/travel/approve</text>
+    <text x="463" y="278" font-size="11" fill="#475569">approve or revise the draft</text>
+
+    <rect x="604" y="232" width="250" height="60" rx="9" fill="#f0fdfa" stroke="#5eead4"/>
+    <text x="729" y="258" font-weight="700">GET /</text>
+    <text x="729" y="278" font-size="11" fill="#475569">Jinja2 UI (index.html)</text>
+
+    <rect x="870" y="232" width="250" height="60" rx="9" fill="#f0fdfa" stroke="#5eead4"/>
+    <text x="995" y="258" font-weight="700">GET /health</text>
+    <text x="995" y="278" font-size="11" fill="#475569">liveness probe</text>
+  </g>
+
+  <!-- ===================== Orchestration ===================== -->
+  <rect x="40" y="342" width="1160" height="248" rx="12" fill="#ffffff" stroke="#c4b5fd" stroke-width="2"/>
+  <text x="56" y="364" font-size="12" font-weight="700" fill="#6d28d9" letter-spacing="1">ORCHESTRATION — backend.py (LangGraph StateGraph · PostgresSaver checkpointer)</text>
+
+  <rect x="460" y="378" width="320" height="52" rx="10" fill="#f5f3ff" stroke="#a78bfa"/>
+  <text x="620" y="400" text-anchor="middle" font-size="14" font-weight="700" fill="#4c1d95">Supervisor Agent + Input Guardrail</text>
+  <text x="620" y="419" text-anchor="middle" font-size="11" fill="#475569">routes to specialists · blocks off-topic</text>
+
+  <g font-size="12" fill="#0f172a" text-anchor="middle">
+    <rect x="62" y="452" width="204" height="56" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="164" y="476" font-weight="700">✈️ Flight Agent</text>
+    <text x="164" y="494" font-size="10.5" fill="#64748b">AviationStack MCP</text>
+
+    <rect x="281" y="452" width="204" height="56" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="383" y="476" font-weight="700">🏨 Hotel Agent</text>
+    <text x="383" y="494" font-size="10.5" fill="#64748b">Tavily MCP</text>
+
+    <rect x="500" y="452" width="204" height="56" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="602" y="476" font-weight="700">🌦️ Weather Agent</text>
+    <text x="602" y="494" font-size="10.5" fill="#64748b">Weather MCP</text>
+
+    <rect x="719" y="452" width="204" height="56" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="821" y="476" font-weight="700">💰 Budget Agent</text>
+    <text x="821" y="494" font-size="10.5" fill="#64748b">Groq LLM</text>
+
+    <rect x="938" y="452" width="204" height="56" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="1040" y="476" font-weight="700">🗓️ Itinerary Agent</text>
+    <text x="1040" y="494" font-size="10.5" fill="#64748b">integrated draft</text>
+  </g>
+
+  <rect x="360" y="526" width="240" height="48" rx="9" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="480" y="547" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">👤 Human Approval</text>
+  <text x="480" y="564" text-anchor="middle" font-size="10.5" fill="#7f1d1d">interrupt() — pauses the graph</text>
+
+  <rect x="640" y="526" width="240" height="48" rx="9" fill="#ecfdf5" stroke="#6ee7b7"/>
+  <text x="760" y="547" text-anchor="middle" font-size="12.5" font-weight="700" fill="#065f46">🏁 Final Response Agent</text>
+  <text x="760" y="564" text-anchor="middle" font-size="10.5" fill="#047857">polishes the approved plan</text>
+
+  <!-- ===================== MCP layer ===================== -->
+  <rect x="40" y="614" width="1160" height="104" rx="12" fill="#ffffff" stroke="#fbcfe8" stroke-width="2"/>
+  <text x="56" y="636" font-size="12" font-weight="700" fill="#be185d" letter-spacing="1">MCP LAYER — mcp_client.py (MultiServerMCPClient · langchain-mcp-adapters)</text>
+  <g font-size="11.5" fill="#0f172a" text-anchor="middle">
+    <rect x="70" y="648" width="340" height="56" rx="9" fill="#fdf2f8" stroke="#f9a8d4"/>
+    <text x="240" y="671" font-weight="700">Tavily MCP · streamable_http</text>
+    <text x="240" y="690" font-size="10.5" fill="#64748b">tavily_search → hotels, sights, tips</text>
+
+    <rect x="450" y="648" width="340" height="56" rx="9" fill="#fdf2f8" stroke="#f9a8d4"/>
+    <text x="620" y="671" font-weight="700">AviationStack MCP · uvx stdio</text>
+    <text x="620" y="690" font-size="10.5" fill="#64748b">list_airports · list_airlines</text>
+
+    <rect x="830" y="648" width="340" height="56" rx="9" fill="#fdf2f8" stroke="#f9a8d4"/>
+    <text x="1000" y="671" font-weight="700">Weather MCP · local python stdio</text>
+    <text x="1000" y="690" font-size="10.5" fill="#64748b">get_current_weather · get_forecast</text>
+  </g>
+
+  <!-- ===================== External services ===================== -->
+  <rect x="40" y="740" width="1160" height="96" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="56" y="762" font-size="12" font-weight="700" fill="#334155" letter-spacing="1">EXTERNAL SERVICES</text>
+  <g font-size="11.5" fill="#0f172a" text-anchor="middle">
+    <rect x="72" y="774" width="196" height="48" rx="9" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="170" y="803" font-weight="700">Groq LLM API</text>
+
+    <rect x="284" y="774" width="196" height="48" rx="9" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="382" y="803" font-weight="700">Tavily API</text>
+
+    <rect x="496" y="774" width="196" height="48" rx="9" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="594" y="803" font-weight="700">AviationStack API</text>
+
+    <rect x="708" y="774" width="196" height="48" rx="9" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="806" y="803" font-weight="700">OpenWeather API</text>
+
+    <rect x="920" y="774" width="196" height="48" rx="9" fill="#faf5ff" stroke="#c4b5fd"/>
+    <text x="1018" y="797" font-weight="700">PostgreSQL</text>
+    <text x="1018" y="813" font-size="10" fill="#64748b">LangGraph checkpoints</text>
+  </g>
+
+  <!-- ===================== Flow arrows ===================== -->
+  <line x1="620" y1="170" x2="620" y2="188" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="620" y1="310" x2="620" y2="340" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="620" y1="590" x2="620" y2="612" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="620" y1="718" x2="620" y2="738" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- supervisor -> agents -->
+  <line x1="620" y1="430" x2="620" y2="450" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- agents -> human approval -->
+  <line x1="602" y1="508" x2="600" y2="524" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- human -> final -->
+  <line x1="600" y1="550" x2="638" y2="550" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- checkpointer: postgres -> orchestration (dashed, right side) -->
+  <path d="M 1116 798 L 1226 798 L 1226 466 L 1202 466" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrowDash)"/>
+  <text x="1222" y="632" text-anchor="end" font-size="10.5" fill="#7e22ce">persists state · resumes threads</text>
+</svg>
