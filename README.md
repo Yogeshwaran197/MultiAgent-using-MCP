@@ -17,6 +17,7 @@
 ## 📖 Table of Contents
 
 - [Overview](#-overview)
+- [Screenshots](#-screenshots)
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
 - [Multi-Agent Workflow](#-multi-agent-workflow)
@@ -42,6 +43,20 @@
 Instead of one monolithic prompt, a **supervisor agent** decides which specialist agents are needed, each specialist pulls **live data through MCP servers**, a **guardrail** keeps the app on-topic, and a **human reviews the draft itinerary** before the final plan is generated. Every run is checkpointed to **PostgreSQL**, so an interrupted plan can be resumed exactly where it paused.
 
 > **Why it's interesting:** it demonstrates a realistic production pattern — *routing + tool use + guardrails + human approval + durable state* — rather than a single LLM call.
+
+---
+
+## 🖼️ Screenshots
+
+### Landing page
+
+![TripMate AI landing page — hero section and travel request planner](docs/screenshot-home.png)
+
+### Generated draft awaiting human review
+
+After a request is submitted, the supervisor's plan (agent chips + guardrail status) and the draft itinerary are shown, and the graph pauses for the human-in-the-loop approval.
+
+![TripMate AI draft itinerary with supervisor execution plan and human-in-the-loop approval buttons](docs/screenshot-plan.png)
 
 ---
 
